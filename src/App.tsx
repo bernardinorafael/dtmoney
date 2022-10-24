@@ -1,7 +1,13 @@
+import { ThemeProvider } from "styled-components"
+import { Transactions } from "./pages/Transactions"
+import { GlobalStyles } from "./styles/global"
+import theme from "./styles/theme/theme"
+
 export function App() {
   return (
-    <div>
-      <h1>Hello world</h1>
-    </div>
+    <ThemeProvider theme={theme}>
+      <GlobalStyles />
+      <Transactions />
+    </ThemeProvider>
   )
 }
