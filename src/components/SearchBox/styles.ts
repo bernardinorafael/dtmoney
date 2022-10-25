@@ -27,7 +27,7 @@ export const SearchContainer = styled.form`
   button {
     align-items: center;
     background: transparent;
-    border-radius: ${(props) => props.theme.radii.full};
+    border-radius: ${(props) => props.theme.radii.sm};
     border: 1px solid ${(props) => props.theme.colors.cyan500};
     color: ${(props) => props.theme.colors.cyan500};
     display: flex;

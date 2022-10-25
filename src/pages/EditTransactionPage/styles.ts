@@ -1,11 +1,11 @@
-import * as Dialog from "@radix-ui/react-dialog"
-import * as RadioGroup from "@radix-ui/react-radio-group"
 import styled, { css, keyframes } from "styled-components"
+import * as RadioGroup from "@radix-ui/react-radio-group"
+import * as Dialog from "@radix-ui/react-dialog"
 
 const contentShow = keyframes`
 	0% {
 		opacity: 0;
-		transform: translate(30%, -100%) scale(0.1);
+		transform: translate(-50%, -50%) scale(0.1);
 	}
 
 	100% {
@@ -23,6 +23,48 @@ export const DialogOverlay = styled(Dialog.Overlay)`
 `
 
 export const DialogContent = styled(Dialog.Content)`
+  align-items: flex-start;
+
+  background: ${(props) => props.theme.colors.gray800};
+  border-radius: ${(props) => props.theme.radii.sm};
+  border: 1px solid ${(props) => props.theme.colors.gray700};
+  box-shadow: 10px 10px 36px -7px rgba(0, 0, 0, 0.5);
+  display: flex;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  flex-direction: column;
+  gap: ${(props) => props.theme.space[6]};
+  min-width: 32rem;
+  padding: ${(props) => props.theme.space[10]};
+  position: fixed;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: ${(props) => props.theme.space[4]};
+    width: 100%;
+  }
+`
+
+export const DialogCloseButton = styled(Dialog.Close)`
+  border-radius: ${(props) => props.theme.radii.sm};
+  cursor: pointer;
+  padding: ${(props) => props.theme.space[1]};
+  position: absolute;
+  right: 15px;
+  top: 15px;
+
+  &:hover {
+    background: ${(props) => props.theme.colors.gray700};
+    transition: background-color 0.3s;
+  }
+`
+
+export const EditProjectPageContainer = styled.main`
+  border: 1px solid #fff;
+
   align-items: flex-start;
   animation: 0.2s ${contentShow} ease-in-out;
   background: ${(props) => props.theme.colors.gray800};
@@ -59,7 +101,7 @@ export const Input = styled.input<InputProps>`
   padding: ${(props) => props.theme.space[4]};
 
   &::placeholder {
-    color: ${(props) => props.theme.colors.gray500};
+    color: ${(props) => props.theme.colors.gray400};
   }
 
   &[type="number"] {
@@ -119,20 +161,6 @@ export const TransactionTypeButton = styled(RadioGroup.Item)<TransactionTypeButt
     box-shadow: 0 0 0 2px
       ${(props) =>
         props.variant === "income" ? props.theme.colors.green500 : props.theme.colors.red500};
-  }
-`
-
-export const DialogCloseButton = styled(Dialog.Close)`
-  border-radius: ${(props) => props.theme.radii.sm};
-  cursor: pointer;
-  padding: ${(props) => props.theme.space[1]};
-  position: absolute;
-  right: 15px;
-  top: 15px;
-
-  &:hover {
-    background: ${(props) => props.theme.colors.gray700};
-    transition: background-color 0.3s;
   }
 `
 

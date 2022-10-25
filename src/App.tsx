@@ -1,6 +1,8 @@
+import { BrowserRouter } from "react-router-dom"
 import { ThemeProvider } from "styled-components"
+import { Header } from "./components/Header"
 import { TransactionProvider } from "./context/TransactionContext"
-import { Transactions } from "./pages/Transactions"
+import { RoutersPage } from "./routers/routers"
 import { GlobalStyles } from "./styles/global"
 import theme from "./styles/theme/theme"
 
@@ -9,7 +11,11 @@ export function App() {
     <ThemeProvider theme={theme}>
       <TransactionProvider>
         <GlobalStyles />
-        <Transactions />
+
+        <BrowserRouter>
+          <Header />
+          <RoutersPage />
+        </BrowserRouter>
       </TransactionProvider>
     </ThemeProvider>
   )

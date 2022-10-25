@@ -1,13 +1,7 @@
-import { zodResolver } from "@hookform/resolvers/zod"
-import * as Dialog from "@radix-ui/react-dialog"
+import { useContext, useEffect, useState } from "react"
+import { app } from "../../services/axios"
 import * as Icon from "phosphor-react"
-import { useContext } from "react"
-import { Controller, useForm } from "react-hook-form"
-import { ThemeContext } from "styled-components"
-import { useContextSelector } from "use-context-selector"
-import * as z from "zod"
-import { TransactionsContext } from "../../context/TransactionContext"
-import { InputErrorMessage } from "../InputErrorMessage"
+import * as Dialog from "@radix-ui/react-dialog"
 import {
   ButtonNewTransaction,
   ButtonSubmittingNewTransaction,
@@ -18,6 +12,26 @@ import {
   TransactionTypeButton,
   TransactionTypeContainer,
 } from "./styles"
+import * as z from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Controller, useForm } from "react-hook-form"
+import { InputErrorMessage } from "../../components/InputErrorMessage"
+import { ThemeContext } from "styled-components"
+import { useContextSelector } from "use-context-selector"
+import { TransactionsContext } from "../../context/TransactionContext"
+
+interface Transaction {
+  category: string
+  description: string
+  price: number
+  type: "income" | "outcome"
+  created_at: Date
+}
+
+interface EditTransactionPageProps {
+  id?: string
+  toggleModalState?: () => void
+}
 
 const newTransactionFormSchema = z.object({
   description: z
@@ -31,35 +45,42 @@ const newTransactionFormSchema = z.object({
 
 type NewTransactionFormInput = z.infer<typeof newTransactionFormSchema>
 
-export function NewTransactionModal() {
-  const { colors } = useContext(ThemeContext)
-
-  const createTransactions = useContextSelector(TransactionsContext, (context) => {
-    return context.createTransactions
+export function EditTransactionPage({ id, toggleModalState }: EditTransactionPageProps) {
+  const fetchTransactions = useContextSelector(TransactionsContext, (context) => {
+    return context.fetchTransactions
   })
+  const { colors } = useContext(ThemeContext)
+  const [transaction, setTransaction] = useState<Transaction | null>(null)
 
   const {
-    reset,
     control,
     register,
     handleSubmit,
+    reset,
     formState: { isSubmitting, errors },
   } = useForm<NewTransactionFormInput>({
     resolver: zodResolver(newTransactionFormSchema),
-    defaultValues: { type: "income" },
+    defaultValues: {},
   })
 
-  async function handleCreateNewTransaction(data: NewTransactionFormInput) {
+  useEffect(() => {
+    app.get(`/transactions/${id}`).then((response) => setTransaction(response.data))
+  }, [id])
+
+  async function handleUpdateTransaction(data: NewTransactionFormInput) {
     const { category, description, price, type } = data
 
-    await createTransactions({
-      type,
-      price,
+    const response = await app.patch(`/transactions/${id}`, {
       category,
       description,
+      price,
+      type,
+      created_at: new Date(),
     })
 
-    reset()
+    setTransaction(response.data)
+		toggleModalState!()
+    fetchTransactions()
   }
 
   return (
@@ -71,14 +92,15 @@ export function NewTransactionModal() {
           <Icon.X weight="duotone" size={32} />
         </DialogCloseButton>
 
-        <Dialog.Title>Nova transação</Dialog.Title>
+        <Dialog.Title>Edite a transação</Dialog.Title>
 
-        <form onSubmit={handleSubmit(handleCreateNewTransaction)}>
+        <form onSubmit={handleSubmit(handleUpdateTransaction)}>
           <div style={{ display: "flex", flexDirection: "column", gap: ".5rem" }}>
             <Input
               autoFocus
               type="text"
               maxLength={66}
+              defaultValue={transaction?.description}
               placeholder="Descrição"
               {...register("description")}
               error={!!errors.description?.message}
@@ -93,6 +115,7 @@ export function NewTransactionModal() {
             <Input
               type="number"
               placeholder="Preço"
+              defaultValue={transaction?.price}
               error={!!errors.price?.message}
               {...register("price", { valueAsNumber: true })}
             />
@@ -101,10 +124,12 @@ export function NewTransactionModal() {
               <InputErrorMessage>{errors.price.message}</InputErrorMessage>
             )}
           </div>
+
           <div style={{ display: "flex", flexDirection: "column", gap: ".5rem" }}>
             <Input
               type="text"
               placeholder="Categoria"
+              defaultValue={transaction?.category}
               {...register("category")}
               error={!!errors.category?.message}
             />
@@ -116,6 +141,7 @@ export function NewTransactionModal() {
           <Controller
             name="type"
             control={control}
+            defaultValue={transaction?.type}
             render={({ field }) => {
               return (
                 <TransactionTypeContainer onValueChange={field.onChange} value={field.value}>
@@ -134,11 +160,11 @@ export function NewTransactionModal() {
           />
 
           {!isSubmitting ? (
-            <ButtonNewTransaction type="submit">Cadastrar</ButtonNewTransaction>
+            <ButtonNewTransaction type="submit">Salvar</ButtonNewTransaction>
           ) : (
             <ButtonSubmittingNewTransaction disabled={isSubmitting} type="button">
               <Icon.CircleNotch color={colors.gray900} size={24} weight="bold" />
-              Cadastrar
+              Salvar
             </ButtonSubmittingNewTransaction>
           )}
         </form>

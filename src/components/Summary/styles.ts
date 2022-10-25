@@ -10,30 +10,47 @@ export const SummaryContainer = styled.section`
   width: 100%;
 `
 
-export const SummaryCard = styled.div`
-  background: ${(props) => props.theme.colors.gray700};
+interface SummaryCardTotalProps {
+  summaryAmount: number
+}
+
+export const SummaryCardTotal = styled.div<SummaryCardTotalProps>`
+  background: ${(props) => props.theme.colors.gray800};
   border-radius: ${(props) => props.theme.radii.sm};
-  padding: ${(props) => props.theme.space[4]};
+  border: 1px solid ${(props) => props.theme.colors.gray700};
+  box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.5);
+  padding: ${(props) => props.theme.space[6]} ${(props) => props.theme.space[6]};
   user-select: none;
-
-  header {
-    align-items: center;
-    color: ${(props) => props.theme.colors.gray100};
-    display: flex;
-    font-weight: ${(props) => props.theme.fontWeight.semibold};
-    justify-content: space-between;
-
-    span {
-      color: ${(props) => props.theme.colors.gray500};
-      font-size: ${(props) => props.theme.fontSizes.xl};
-      padding-bottom: ${(props) => props.theme.space[1]};
-    }
-  }
+  align-items: center;
+  color: ${(props) => props.theme.colors.gray100};
+  display: flex;
+  font-weight: ${(props) => props.theme.fontWeight.semibold};
+  justify-content: space-between;
 
   strong {
     display: table;
     font-size: ${(props) => props.theme.fontSizes["5xl"]};
     font-weight: ${(props) => props.theme.fontWeight.bold};
-    margin-top: ${(props) => props.theme.space[4]};
+    color: ${(props) =>
+      props.summaryAmount < 0 ? props.theme.colors.red500 : props.theme.colors.green500};
+  }
+`
+
+export const SummaryCard = styled.div`
+  align-items: center;
+  background: ${(props) => props.theme.colors.gray800};
+  border-radius: ${(props) => props.theme.radii.sm};
+  border: 1px solid ${(props) => props.theme.colors.gray700};
+  box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.5);
+  color: ${(props) => props.theme.colors.gray100};
+  display: flex;
+  justify-content: space-between;
+  padding: ${(props) => props.theme.space[6]} ${(props) => props.theme.space[6]};
+  user-select: none;
+
+  strong {
+    display: table;
+    font-size: ${(props) => props.theme.fontSizes["5xl"]};
+    font-weight: ${(props) => props.theme.fontWeight.bold};
   }
 `

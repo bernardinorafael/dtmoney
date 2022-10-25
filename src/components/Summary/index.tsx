@@ -2,7 +2,7 @@ import * as Icon from "phosphor-react"
 import { useContext } from "react"
 import { ThemeContext } from "styled-components"
 import { useSummary } from "../../hooks/useSummary"
-import { SummaryCard, SummaryContainer } from "./styles"
+import { SummaryCard, SummaryCardTotal, SummaryContainer } from "./styles"
 
 export function Summary() {
   const { colors } = useContext(ThemeContext)
@@ -17,30 +17,26 @@ export function Summary() {
   return (
     <SummaryContainer>
       <SummaryCard>
-        <header>
-          <span>Entradas</span>
-          <Icon.ArrowCircleUp size={36} weight="duotone" color={colors.green700} />
-        </header>
-
         <strong>{formatCurrency.format(summary.income)}</strong>
+        <Icon.ArrowCircleUp size={40} weight="duotone" color={colors.green700} />
       </SummaryCard>
 
       <SummaryCard>
-        <header>
-          <span>Saídas</span>
-          <Icon.ArrowCircleDown size={36} weight="duotone" color={colors.red700} />
-        </header>
-
         <strong>{formatCurrency.format(summary.outcome)}</strong>
+        <Icon.ArrowCircleDown size={40} weight="duotone" color={colors.red700} />
       </SummaryCard>
-      <SummaryCard>
-        <header>
-          <span>Total</span>
-          <Icon.Cardholder size={36} weight="duotone" color={colors.cyan700} />
-        </header>
 
-        <strong>{formatCurrency.format(summary.total)}</strong>
-      </SummaryCard>
+      <SummaryCardTotal summaryAmount={summary.total}>
+        <strong>
+          {summary.total > 0 && "+"}
+          {formatCurrency.format(summary.total)}
+        </strong>
+        <Icon.Coins
+          size={40}
+          weight="duotone"
+          color={summary.total < 0 ? colors.red500 : colors.green500}
+        />
+      </SummaryCardTotal>
     </SummaryContainer>
   )
 }

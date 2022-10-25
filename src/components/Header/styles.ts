@@ -28,18 +28,17 @@ export const HeaderContent = styled.div`
 
 export const NewTransactionButton = styled.button`
   align-items: center;
+  border-radius: ${(props) => props.theme.radii.sm};
+  border: 1px solid ${(props) => props.theme.colors.cyan500};
   background: ${(props) => props.theme.colors.cyan500};
-  border-radius: ${(props) => props.theme.radii.full};
-  border: none;
   color: ${(props) => props.theme.colors.gray900};
   display: flex;
-  font-size: ${(props) => props.theme.fontSizes.lg};
   font-weight: ${(props) => props.theme.fontWeight.semibold};
   justify-content: center;
-  padding: ${(props) => props.theme.space[4]};
+  padding: ${(props) => props.theme.space[3]} ${(props) => props.theme.space[5]};
 
-  &:hover {
+  &:not(:disabled):hover {
     background: ${(props) => props.theme.colors.cyan700};
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, color 0.3s;
   }
 `

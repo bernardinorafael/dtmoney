@@ -1,19 +1,32 @@
+import * as Dialog from "@radix-ui/react-dialog"
 import { formatDistanceToNow } from "date-fns"
 import { ptBR } from "date-fns/locale"
 import * as Icon from "phosphor-react"
+import { useContext, useState } from "react"
+import { ThemeContext } from "styled-components"
 import { useContextSelector } from "use-context-selector"
-import { Header } from "../../components/Header"
-import { SearchBox } from "../../components/SearchBox"
-import { Summary } from "../../components/Summary"
-import { TransactionsContext } from "../../context/TransactionContext"
+import { SearchBox } from "../components/SearchBox"
+import { Summary } from "../components/Summary"
+import { TransactionsContext } from "../context/TransactionContext"
+import { EditTransactionPage } from "./EditTransactionPage"
+
 import {
-	DeleteButton,
-	PriceHighlight,
-	TableTransactions,
-	TransactionsContainer
-} from "./styles"
+  ActionButtonContainer,
+  DeleteButton,
+  EditTransactionButton,
+  PriceHighlight,
+  TableTransactions,
+  TransactionsContainer,
+} from "./styles.transactions"
 
 export function Transactions() {
+  const { colors } = useContext(ThemeContext)
+  const [openModal, setOpenModal] = useState(false)
+
+  function toggleModalState() {
+    setOpenModal(!openModal)
+  }
+
   const { transactions, handleDeleteTransaction } = useContextSelector(
     TransactionsContext,
     ({ transactions, handleDeleteTransaction }) => {
@@ -33,7 +46,6 @@ export function Transactions() {
 
   return (
     <div>
-      <Header />
       <Summary />
 
       <TransactionsContainer>
@@ -44,7 +56,7 @@ export function Transactions() {
             {transactions?.map((transaction) => {
               return (
                 <tr key={transaction.id}>
-                  <td width="30%">
+                  <td width="40%">
                     {transaction.description[0].toUpperCase() +
                       transaction.description.substring(1)}
                   </td>
@@ -62,11 +74,24 @@ export function Transactions() {
                       locale: ptBR,
                     })}
                   </td>
-                  <td width="5%">
+                  <ActionButtonContainer>
                     <DeleteButton type="button" onClick={() => handleDelete(transaction.id)}>
-                      <Icon.Trash size={24} weight="duotone" />
+                      <Icon.Trash size={24} weight="duotone" color={colors.red500} />
                     </DeleteButton>
-                  </td>
+
+                    <Dialog.Root open={openModal} onOpenChange={setOpenModal}>
+                      <Dialog.Trigger asChild>
+                        <EditTransactionButton type="button">
+                          <Icon.Pencil size={24} weight="duotone" />
+                        </EditTransactionButton>
+                      </Dialog.Trigger>
+
+                      <EditTransactionPage
+                        toggleModalState={toggleModalState}
+                        id={transaction.id}
+                      />
+                    </Dialog.Root>
+                  </ActionButtonContainer>
                 </tr>
               )
             })}

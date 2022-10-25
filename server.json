@@ -2,27 +2,28 @@
   "transactions": [
     {
       "type": "outcome",
-      "price": 1700,
-      "category": "despesa mensal",
-      "id": "2cd1cc19-6219-4837-9548-42c851564eb4",
-      "description": "aluguel",
-      "created_at": "2022-10-25T01:11:09.049Z"
+      "price": 1702,
+      "category": "nova despesa",
+      "id": "1877a7b8-82ab-442f-be24-709d68c9dac2",
+      "description": "presentes 1",
+      "created_at": "2022-10-25T21:15:05.002Z",
+      "updated_on": "2022-10-25T20:38:09.214Z"
     },
     {
       "type": "income",
-      "price": 7800,
-      "category": "salário",
-      "id": "38a83753-264b-4f26-9463-a48c1a623568",
-      "description": "salário mensal",
-      "created_at": "2022-10-25T01:11:56.037Z"
+      "price": 1300,
+      "category": "despesas básicas",
+      "id": "3a059c41-2a23-4d84-a764-68ce59aab2f9",
+      "description": "aluguel 2",
+      "created_at": "2022-10-25T21:14:58.575Z"
     },
     {
-      "type": "outcome",
-      "price": 1100,
-      "category": "carro",
-      "id": "29f8880e-1fe4-4d14-b3d0-511e969b11d1",
-      "description": "parcela do carro",
-      "created_at": "2022-10-25T01:12:55.607Z"
+      "type": "income",
+      "price": 1302,
+      "category": "despesa do ",
+      "id": "2c13cf04-3a55-42bd-abe4-7337fb180600",
+      "description": "projeto",
+      "created_at": "2022-10-25T21:15:17.043Z"
     }
   ]
 }

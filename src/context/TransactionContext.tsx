@@ -25,9 +25,10 @@ interface Transactions {
 
 interface TransactionsContextType {
   transactions: Transactions[]
-  handleDeleteTransaction: (id?: string) => void
+
   createTransactions: (data: createTransactionsProps) => Promise<void>
   fetchTransactions: (query?: string) => Promise<void>
+  handleDeleteTransaction: (id?: string) => void
 }
 
 export const TransactionsContext = createContext({} as TransactionsContextType)
