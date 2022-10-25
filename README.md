@@ -2,7 +2,6 @@
 
 ### Aplicação para simular um CRUD, é possível fazer um controle financeiro com as features
 
-![Resultado final do projeto](src/assets/preview.png)
 
 # Features
 
