@@ -27,4 +27,18 @@ export const GlobalStyles = createGlobalStyle`
 	button {
 		cursor: pointer;
 	}
+
+	::-webkit-scrollbar-track {
+		background-color: transparent;
+	}
+
+	::-webkit-scrollbar {
+		width: ${(props) => props.theme.space[2]};
+		background: transparent;
+	}
+
+	::-webkit-scrollbar-thumb {
+		background: ${(props) => props.theme.colors.gray700};
+		border-radius: ${(props) => props.theme.radii.sm};
+	}
 `

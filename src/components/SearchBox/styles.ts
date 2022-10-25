@@ -1,4 +1,5 @@
-import styled from "styled-components"
+import * as Icon from "phosphor-react"
+import styled, { keyframes } from "styled-components"
 
 export const SearchContainer = styled.form`
   display: flex;
@@ -12,6 +13,11 @@ export const SearchContainer = styled.form`
     flex: 1;
     outline: 0;
     padding: ${(props) => props.theme.space[4]};
+
+    &:focus::-webkit-input-placeholder {
+      color: transparent;
+      transition: color 0.2s;
+    }
 
     &::placeholder {
       color: ${(props) => props.theme.colors.gray500};
@@ -32,13 +38,21 @@ export const SearchContainer = styled.form`
 
     &:disabled {
       cursor: not-allowed;
-      opacity: 0.3;
+      opacity: 0.2;
     }
 
     &:not(:disabled):hover {
-      background: ${(props) => props.theme.colors.cyan700};
-      border: 1px solid transparent;
-      color: ${(props) => props.theme.colors.gray900};
+      background: ${(props) => props.theme.colors.gray700};
     }
   }
+`
+
+const spinnerLoading = keyframes`
+	100% {
+		transform: rotate(360deg);
+	}
+`
+
+export const IconSpinner = styled(Icon.CircleNotch)`
+  animation: ${spinnerLoading} 1.5s infinite;
 `

@@ -27,14 +27,16 @@ export const HeaderContent = styled.div`
 `
 
 export const NewTransactionButton = styled.button`
+  align-items: center;
   background: ${(props) => props.theme.colors.cyan500};
-  border-radius: ${(props) => props.theme.radii.sm};
+  border-radius: ${(props) => props.theme.radii.full};
   border: none;
   color: ${(props) => props.theme.colors.gray900};
+  display: flex;
   font-size: ${(props) => props.theme.fontSizes.lg};
   font-weight: ${(props) => props.theme.fontWeight.semibold};
-  height: 50px;
-  padding: 0 ${(props) => props.theme.space[5]};
+  justify-content: center;
+  padding: ${(props) => props.theme.space[4]};
 
   &:hover {
     background: ${(props) => props.theme.colors.cyan700};

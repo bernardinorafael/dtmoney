@@ -1,0 +1,28 @@
+{
+  "transactions": [
+    {
+      "type": "outcome",
+      "price": 1700,
+      "category": "despesa mensal",
+      "id": "2cd1cc19-6219-4837-9548-42c851564eb4",
+      "description": "aluguel",
+      "created_at": "2022-10-25T01:11:09.049Z"
+    },
+    {
+      "type": "income",
+      "price": 7800,
+      "category": "salário",
+      "id": "38a83753-264b-4f26-9463-a48c1a623568",
+      "description": "salário mensal",
+      "created_at": "2022-10-25T01:11:56.037Z"
+    },
+    {
+      "type": "outcome",
+      "price": 1100,
+      "category": "carro",
+      "id": "29f8880e-1fe4-4d14-b3d0-511e969b11d1",
+      "description": "parcela do carro",
+      "created_at": "2022-10-25T01:12:55.607Z"
+    }
+  ]
+}
